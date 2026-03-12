@@ -65,6 +65,24 @@ const DetectMedia = () => {
         <AnimatePresence mode="wait">
           {!analyzing ? (
             <motion.div key="upload" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              {/* Detection modes */}
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {modes.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setSelectedMode(m.id)}
+                    className={`glass-card p-4 flex flex-col items-center gap-2 transition-all duration-200 ${
+                      selectedMode === m.id
+                        ? "border-accent bg-accent-secondary/40 ring-1 ring-accent/30"
+                        : "hover:border-accent/30"
+                    }`}
+                  >
+                    <m.icon className="w-5 h-5 text-foreground/70" />
+                    <span className="text-xs font-medium">{m.label}</span>
+                  </button>
+                ))}
+              </div>
+
               {/* Upload zone */}
               <div
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -86,24 +104,6 @@ const DetectMedia = () => {
                     <LinkIcon className="w-4 h-4" /> Paste Media URL
                   </Button>
                 </div>
-              </div>
-
-              {/* Detection modes */}
-              <div className="grid grid-cols-3 gap-3 mt-6">
-                {modes.map((m) => (
-                  <button
-                    key={m.id}
-                    onClick={() => setSelectedMode(m.id)}
-                    className={`glass-card p-4 flex flex-col items-center gap-2 transition-all duration-200 ${
-                      selectedMode === m.id
-                        ? "border-accent bg-accent-secondary/40 ring-1 ring-accent/30"
-                        : "hover:border-accent/30"
-                    }`}
-                  >
-                    <m.icon className="w-5 h-5 text-foreground/70" />
-                    <span className="text-xs font-medium">{m.label}</span>
-                  </button>
-                ))}
               </div>
             </motion.div>
           ) : (
